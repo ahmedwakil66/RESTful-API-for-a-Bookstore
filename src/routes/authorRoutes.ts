@@ -3,15 +3,19 @@ import { body } from 'express-validator';
 import {
   createAuthor,
   deleteAuthor,
-  getAllAuthors,
-  getAuthorById,
+  getAuthors,
+  getAuthor,
+  getAuthorWithBooks,
   updateAuthor,
+  getAuthorsWithBooks,
 } from '../controllers';
 
 const router = express.Router();
 
-router.get('/', getAllAuthors);
-router.get('/:id', getAuthorById);
+router.get('/', getAuthors);
+router.get('/details', getAuthorsWithBooks);
+router.get('/:id', getAuthor);
+router.get('/:id/details', getAuthorWithBooks);
 
 router.post(
   '/',
