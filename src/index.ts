@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
-app.use('authors', authorRoutes);
+app.use('/authors', authorRoutes);
 
 // Sample route
 app.get('/', (req, res) => {
