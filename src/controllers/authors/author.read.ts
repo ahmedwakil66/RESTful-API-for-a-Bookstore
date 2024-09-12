@@ -4,8 +4,15 @@ import knex from "../../db";
 
 // GET /authors
 export const getAuthors = async (req: Request, res: Response) => {
+  const query = req.query;
   try {
-    const authors = await knex("authors").select("*");
+    const authorsQuery = knex("authors").select("*");
+    if (query && query.name) {
+      authorsQuery.whereRaw("LOWER(name) LIKE ?", [
+        `%${query.name.toString().toLowerCase()}%`,
+      ]);
+    }
+    const authors = await authorsQuery;
     res.status(200).json(authors);
   } catch (err) {
     res.status(500).json({ error: "Failed to retrieve authors" });
