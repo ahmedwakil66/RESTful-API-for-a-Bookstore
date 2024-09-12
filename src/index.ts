@@ -1,7 +1,8 @@
-import express, { Application } from 'express';
-import dotenv from 'dotenv';
+import express, { Application } from "express";
+import dotenv from "dotenv";
 
-import authorRoutes from './routes/authorRoutes';
+import authorRoutes from "./routes/authorRoutes";
+import bookRoutes from "./routes/bookRoutes";
 
 // Initialize environment variables
 dotenv.config();
@@ -11,11 +12,12 @@ const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
-app.use('/authors', authorRoutes);
+app.use("/authors", authorRoutes);
+app.use("/books", bookRoutes);
 
 // Sample route
-app.get('/', (req, res) => {
-  res.send('Welcome to the Bookstore API');
+app.get("/", (req, res) => {
+  res.send("Welcome to the Bookstore API");
 });
 
 // Start the server
