@@ -5,13 +5,25 @@ import knex from "../../db";
 // GET /authors
 export const getAuthors = async (req: Request, res: Response) => {
   const query = req.query;
+  let pge = "1",
+    lmt = "10";
+
   try {
     const authorsQuery = knex("authors").select("*");
-    if (query && query.name) {
-      authorsQuery.whereRaw("LOWER(name) LIKE ?", [
-        `%${query.name.toString().toLowerCase()}%`,
-      ]);
+    if (query) {
+      const { name, page, limit } = query;
+      if (page) pge = page.toString();
+      if (limit) lmt = limit.toString();
+      if (name) {
+        authorsQuery.whereRaw("LOWER(name) LIKE ?", [
+          `%${name.toString().toLowerCase()}%`,
+        ]);
+      }
     }
+
+    const offset = (parseInt(pge) - 1) * parseInt(lmt);
+    authorsQuery.offset(offset).limit(parseInt(lmt));
+
     const authors = await authorsQuery;
     res.status(200).json(authors);
   } catch (err) {

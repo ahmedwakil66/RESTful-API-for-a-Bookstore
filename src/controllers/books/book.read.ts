@@ -4,22 +4,24 @@ import knex from "../../db";
 // GET /books
 export const getAllBooks = async (req: Request, res: Response) => {
   const query = req.query;
-  const filter: { author_id?: number } = {};
-  if (query) {
-    const { author } = query;
-    if (author) filter.author_id = parseInt(query.author as string);
-  }
+  let pge = "1",
+    lmt = "10";
 
   try {
     const booksQuery = knex("books").select("*");
     if (query) {
-      const { author, title } = query;
+      const { author, title, page, limit } = query;
+      if (page) pge = page.toString();
+      if (limit) lmt = limit.toString();
       if (author) booksQuery.where({ author_id: author });
       if (title)
         booksQuery.whereRaw("LOWER(title) LIKE ?", [
           `%${title.toString().toLowerCase()}%`,
         ]);
     }
+
+    const offset = (parseInt(pge) - 1) * parseInt(lmt);
+    booksQuery.offset(offset).limit(parseInt(lmt));
 
     const books = await booksQuery;
     res.status(200).json(books);
