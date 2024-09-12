@@ -15,6 +15,7 @@ export const createAuthor = async (req: Request, res: Response) => {
     const result = await knex('authors').insert({ name, bio, birthdate });
     res.status(201).json({ id: result[0], name, bio, birthdate });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: 'Failed to create author' });
   }
 };
