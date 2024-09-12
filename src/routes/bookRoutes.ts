@@ -5,6 +5,7 @@ import {
   deleteBook,
   getAllBooks,
   getBookById,
+  getBookWithAuthor,
   updateBook,
 } from "../controllers";
 import { validateAuthorExists } from "../middlewares/validateAuthor";
@@ -13,6 +14,7 @@ const router = express.Router();
 
 router.get("/", getAllBooks);
 router.get("/:id", getBookById);
+router.get("/:id/details", getBookWithAuthor);
 
 router.post(
   "/",
