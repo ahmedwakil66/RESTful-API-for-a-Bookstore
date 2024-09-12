@@ -11,9 +11,17 @@ export const getAllBooks = async (req: Request, res: Response) => {
   }
 
   try {
-    const books = await knex("books")
-      .where({ ...filter })
-      .select("*");
+    const booksQuery = knex("books").select("*");
+    if (query) {
+      const { author, title } = query;
+      if (author) booksQuery.where({ author_id: author });
+      if (title)
+        booksQuery.whereRaw("LOWER(title) LIKE ?", [
+          `%${title.toString().toLowerCase()}%`,
+        ]);
+    }
+
+    const books = await booksQuery;
     res.status(200).json(books);
   } catch (err) {
     res.status(500).json({ error: "Failed to retrieve books" });
