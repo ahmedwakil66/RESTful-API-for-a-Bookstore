@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
-import { validationResult } from 'express-validator';
-import knex from '../../db';
+import { Request, Response } from "express";
+import { validationResult } from "express-validator";
+import knex from "../../db";
 
 // PUT /authors/:id
 export const updateAuthor = async (req: Request, res: Response) => {
@@ -12,23 +12,23 @@ export const updateAuthor = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { name, bio, birthdate } = req.body;
 
-  const updatedData: { name?: string; bio?: string; birthdate?: string } = {};
+  const updatedDoc: { name?: string; bio?: string; birthdate?: string } = {};
 
-  if (name) updatedData.name = name;
-  if (bio) updatedData.bio = bio;
-  if (birthdate) updatedData.birthdate = birthdate;
+  if (name) updatedDoc.name = name;
+  if (bio) updatedDoc.bio = bio;
+  if (birthdate) updatedDoc.birthdate = birthdate;
 
   try {
-    const updated = await knex('authors')
+    const updated = await knex("authors")
       .where({ id })
-      .update({ name, bio, birthdate });
+      .update({ ...updatedDoc });
     if (updated) {
-      res.status(200).json({ id, ...updatedData });
+      res.status(200).json({ id, ...updatedDoc });
     } else {
-      res.status(404).json({ error: 'Author not found' });
+      res.status(404).json({ error: "Author not found" });
     }
   } catch (err) {
     console.log(err);
-    res.status(500).json({ error: 'Failed to update author' });
+    res.status(500).json({ error: "Failed to update author" });
   }
 };
