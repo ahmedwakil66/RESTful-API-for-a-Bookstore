@@ -32,10 +32,12 @@ router.put(
   '/:id',
   [
     body('name')
+      .optional()
       .isString()
       .notEmpty()
       .withMessage('Name is required and should be a non-empty string'),
     body('birthdate')
+      .optional()
       .isISO8601()
       .toDate()
       .withMessage('Birthdate must be a valid date'),
