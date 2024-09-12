@@ -1,6 +1,12 @@
 import express from 'express';
 import { body } from 'express-validator';
-import { createAuthor, getAllAuthors, getAuthorById } from '../controllers';
+import {
+  createAuthor,
+  deleteAuthor,
+  getAllAuthors,
+  getAuthorById,
+  updateAuthor,
+} from '../controllers';
 
 const router = express.Router();
 
@@ -14,9 +20,29 @@ router.post(
       .isString()
       .notEmpty()
       .withMessage('Name is required and should be a non-empty string'),
-    body('birthdate').isDate().withMessage('Birthdate must be a valid date'),
+    body('birthdate')
+      .isISO8601()
+      .toDate()
+      .withMessage('Birthdate must be a valid date'),
   ],
   createAuthor,
 );
+
+router.put(
+  '/:id',
+  [
+    body('name')
+      .isString()
+      .notEmpty()
+      .withMessage('Name is required and should be a non-empty string'),
+    body('birthdate')
+      .isISO8601()
+      .toDate()
+      .withMessage('Birthdate must be a valid date'),
+  ],
+  updateAuthor,
+);
+
+router.delete('/:id', deleteAuthor);
 
 export default router;
