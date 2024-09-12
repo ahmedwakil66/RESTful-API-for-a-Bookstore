@@ -3,8 +3,17 @@ import knex from "../../db";
 
 // GET /books
 export const getAllBooks = async (req: Request, res: Response) => {
+  const query = req.query;
+  const filter: { author_id?: number } = {};
+  if (query) {
+    const { author } = query;
+    if (author) filter.author_id = parseInt(query.author as string);
+  }
+
   try {
-    const books = await knex("books").select("*");
+    const books = await knex("books")
+      .where({ ...filter })
+      .select("*");
     res.status(200).json(books);
   } catch (err) {
     res.status(500).json({ error: "Failed to retrieve books" });
