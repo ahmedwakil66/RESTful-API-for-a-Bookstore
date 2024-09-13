@@ -55,7 +55,7 @@ Everything that are asked in the original instruction has been implemented.
 At author's creation, a default password '12345' is set, and remember that currently there is no way to manually set or update the password. But security is not ignored! Plain password is not stored in database. A hash with random salt is generated on the fly before saving the author. You can check it by querying authors at get routes.
 ```
 
-##### If you are reading this far kindly  have me in your connection in [LinkedIn](https://www.linkedin.com/in/wakil-ahmed-a62a47248/). <br/> I would love to hear your suggestions. <br/> That was all. Thank You!
+##### If you are reading this far kindly  have me in your connection in [LinkedIn](https://www.linkedin.com/in/wakil-ahmed-a62a47248/). <br/> I would love to hear your suggestions. <br/> That's all. Thank You!
 
 
 ## Original instructions
