@@ -17,7 +17,7 @@ export const login = async (req: Request, res: Response) => {
 
       // Generate tokens
       const payload = {
-        id: author._id,
+        id: author.id,
       };
       const accessToken = jsonwebtoken.generateAccessToken(payload);
 

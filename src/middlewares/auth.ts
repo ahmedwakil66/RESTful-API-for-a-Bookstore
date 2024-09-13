@@ -15,6 +15,7 @@ export const authMiddleware = (
   try {
     const decoded = jwt.verifyToken(token, "access");
     if (!decoded) return res.status(403).json({ message: "Invalid token" });
+    console.log('decoded', decoded);
 
     req.decoded = decoded;
     next();

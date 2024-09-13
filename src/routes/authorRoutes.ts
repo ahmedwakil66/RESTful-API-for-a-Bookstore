@@ -9,6 +9,7 @@ import {
   updateAuthor,
   getAuthorsWithBooks,
 } from "../controllers";
+import { authMiddleware } from "../middlewares/auth";
 
 const router = express.Router();
 
@@ -49,6 +50,6 @@ router.put(
   updateAuthor,
 );
 
-router.delete("/:id", deleteAuthor);
+router.delete("/:id", authMiddleware, deleteAuthor);
 
 export default router;
