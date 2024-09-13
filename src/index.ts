@@ -1,6 +1,7 @@
 import express, { Application } from "express";
 import dotenv from "dotenv";
 
+import authRoutes from "./routes/authRoutes";
 import authorRoutes from "./routes/authorRoutes";
 import bookRoutes from "./routes/bookRoutes";
 
@@ -12,6 +13,7 @@ const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
+app.use("/auth", authRoutes);
 app.use("/authors", authorRoutes);
 app.use("/books", bookRoutes);
 

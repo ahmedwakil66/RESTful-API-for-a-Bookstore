@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { EncodedPayload, DecodedPayload } from "../@types/jwt";
+import { EncodedPayload, DecodedPayload } from "../@types";
 
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 
@@ -29,7 +29,7 @@ class JWT {
     });
   }
 
-  verifyToken(token: string, type: "access") {
+  verifyToken(token: string, type?: "access") {
     try {
       const secret = this.#accessTokenSecret;
       return jwt.verify(token, secret) as DecodedPayload;
